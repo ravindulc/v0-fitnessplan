@@ -4,6 +4,8 @@ import { motion } from 'framer-motion'
 import { Layers, Building2, Target } from 'lucide-react'
 import { SECTION_IDS, BUILD_PHASES } from '@/lib/constants'
 import { SectionWrapper } from '@/components/shared/section-wrapper'
+import { cn } from '@/lib/utils'
+
 
 const iconMap = {
   foundation: Layers,
@@ -45,62 +47,72 @@ export function BuildPhases() {
         </motion.p>
       </div>
 
-      {/* Bento Grid */}
-      <div className="grid md:grid-cols-3 gap-6">
-        {BUILD_PHASES.map((phase, index) => {
-          const Icon = iconMap[phase.icon as keyof typeof iconMap]
-          
-          return (
-            <motion.div
-              key={phase.phase}
-              initial={{ opacity: 0, y: 20 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              transition={{ delay: index * 0.1 }}
-              className="group relative"
-            >
-              <div className="relative h-full rounded-2xl border border-border bg-card p-6 lg:p-8 transition-all duration-300 hover:border-primary/50 hover:bg-card/80">
-                {/* Phase number */}
-                <div className="absolute top-4 right-4 font-mono text-6xl font-bold text-muted/30">
-                  {phase.phase}
-                </div>
-
-                {/* Icon */}
-                <div className="mb-6 inline-flex h-12 w-12 items-center justify-center rounded-xl bg-primary/10 text-primary">
-                  <Icon className="h-6 w-6" />
-                </div>
-
+      {/* Gantt Timeline */}
+      <div className="relative max-w-4xl mx-auto">
+        {/* Vertical Line */}
+        <div className="absolute left-4 md:left-1/2 top-0 bottom-0 w-px bg-border/50 -translate-x-1/2 hidden md:block" />
+        
+        <div className="space-y-12">
+          {BUILD_PHASES.map((phase, index) => {
+            const Icon = iconMap[phase.icon as keyof typeof iconMap]
+            const isEven = index % 2 === 0
+            
+            return (
+              <motion.div
+                key={phase.phase}
+                initial={{ opacity: 0, x: isEven ? -20 : 20 }}
+                whileInView={{ opacity: 1, x: 0 }}
+                viewport={{ once: true }}
+                transition={{ duration: 0.5, delay: index * 0.1 }}
+                className={cn(
+                  'relative flex items-center justify-between md:flex-row flex-col gap-8',
+                  !isEven && 'md:flex-row-reverse'
+                )}
+              >
                 {/* Content */}
-                <div className="relative">
-                  <div className="mb-2 flex items-center gap-2">
-                    <span className="font-mono text-xs text-primary">PHASE {phase.phase}</span>
-                    <span className="text-xs text-muted-foreground">Weeks {phase.weeks}</span>
+                <div className={cn(
+                  'w-full md:w-[45%] p-6 rounded-2xl glass-panel rim-light relative group',
+                  isEven ? 'md:text-right' : 'md:text-left'
+                )}
+                >
+                  <div className={cn(
+                    'flex items-center gap-2 mb-2',
+                    isEven ? 'md:justify-end' : 'md:justify-start'
+                  )}>
+                    <span className="font-mono text-[10px] text-primary bg-primary/10 px-2 py-0.5 rounded">
+                      PHASE {phase.phase}
+                    </span>
+                    <span className="text-[10px] uppercase tracking-widest text-muted-foreground">
+                      Weeks {phase.weeks}
+                    </span>
                   </div>
                   
-                  <h3 className="text-xl font-bold text-foreground mb-1">
+                  <h3 className="text-2xl font-bold text-foreground mb-2 group-hover:text-primary transition-colors">
                     {phase.title}
                   </h3>
                   
-                  <p className="text-sm font-medium text-primary/80 mb-4">
-                    {phase.subtitle}
-                  </p>
-                  
-                  <p className="text-muted-foreground text-sm leading-relaxed">
+                  <p className="text-sm text-muted-foreground leading-relaxed">
                     {phase.description}
                   </p>
+
+                  {/* Internal Progress Indicator */}
+                  <div className="mt-4 flex items-center gap-2 opacity-50">
+                    <div className="flex-1 h-px bg-border" />
+                    <span className="font-mono text-[8px] uppercase tracking-tighter">Status: Calculated</span>
+                  </div>
                 </div>
 
-                {/* Progress bar */}
-                <div className="mt-6 h-1 w-full rounded-full bg-muted">
-                  <div 
-                    className="h-full rounded-full bg-primary transition-all duration-500"
-                    style={{ width: `${((index + 1) / 3) * 100}%` }}
-                  />
+                {/* Center Node */}
+                <div className="absolute left-4 md:left-1/2 -translate-x-1/2 flex h-8 w-8 items-center justify-center rounded-full border border-primary bg-background shadow-[0_0_15px_var(--primary)] z-10">
+                  <Icon className="h-4 w-4 text-primary" />
                 </div>
-              </div>
-            </motion.div>
-          )
-        })}
+
+                {/* Placeholder for spacing on other side */}
+                <div className="hidden md:block w-[45%]" />
+              </motion.div>
+            )
+          })}
+        </div>
       </div>
 
       {/* Bottom note */}
@@ -109,13 +121,15 @@ export function BuildPhases() {
         whileInView={{ opacity: 1 }}
         viewport={{ once: true }}
         transition={{ delay: 0.4 }}
-        className="mt-12 text-center"
+        className="mt-20 text-center"
       >
-        <p className="text-sm text-muted-foreground">
-          Each phase builds systematically on the last. 
-          <span className="text-foreground"> Skip nothing. Trust the process.</span>
-        </p>
+        <div className="inline-block p-4 rounded-xl bg-secondary/20 border border-border/50 backdrop-blur-sm">
+          <p className="text-xs font-mono text-muted-foreground uppercase tracking-widest">
+            Systematic Integration: <span className="text-primary">100% Completion Required</span>
+          </p>
+        </div>
       </motion.div>
+
     </SectionWrapper>
   )
 }

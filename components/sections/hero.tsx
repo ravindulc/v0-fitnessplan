@@ -5,12 +5,31 @@ import { ArrowRight, Zap } from 'lucide-react'
 import { SECTION_IDS } from '@/lib/constants'
 import { CTAButton } from '@/components/shared/cta-button'
 
+import { TechnicalCallout } from '@/components/shared/technical-callout'
+import { CoordinateMarkers } from '@/components/shared/coordinate-markers'
+
 export function Hero() {
   return (
     <section 
       id={SECTION_IDS.hero}
       className="relative min-h-screen flex items-center justify-center overflow-hidden grid-pattern"
     >
+      {/* Self-drawing blueprint line */}
+      <svg className="absolute inset-0 w-full h-full pointer-events-none opacity-20">
+        <motion.path
+          d="M 100,100 L 900,100 L 900,500 L 100,500 Z"
+          fill="none"
+          stroke="var(--primary)"
+          strokeWidth="1"
+          initial={{ pathLength: 0 }}
+          animate={{ pathLength: 1 }}
+          transition={{ duration: 2, ease: "easeInOut" }}
+        />
+      </svg>
+
+      {/* Coordinate Markers */}
+      <CoordinateMarkers />
+
       {/* Gradient overlay */}
       <div className="absolute inset-0 bg-gradient-to-b from-background via-background/95 to-background" />
       
@@ -24,11 +43,17 @@ export function Hero() {
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.5 }}
-            className="mb-8"
+            className="relative mb-8"
           >
-            <div className="inline-flex items-center gap-2 rounded-full border border-primary/30 bg-primary/10 px-4 py-2">
+            <TechnicalCallout 
+              label="System: Active" 
+              side="left" 
+              className="-left-32 top-0 hidden xl:flex" 
+              delay={0.6}
+            />
+            <div className="inline-flex items-center gap-2 rounded-full border border-primary/30 bg-primary/10 px-4 py-2 rim-light">
               <Zap className="h-4 w-4 text-primary" />
-              <span className="text-sm font-medium text-primary">12-Week Transformation System</span>
+              <span className="text-sm font-medium text-primary uppercase tracking-tighter">12-Week Transformation System</span>
             </div>
           </motion.div>
 
@@ -40,7 +65,16 @@ export function Hero() {
             className="text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-extrabold tracking-tight text-foreground text-balance"
           >
             RE-ENGINEER YOUR
-            <span className="block text-primary">PHYSIQUE.</span>
+            <span className="block text-primary relative">
+              PHYSIQUE.
+              {/* Underline draw */}
+              <motion.div 
+                initial={{ width: 0 }}
+                animate={{ width: '100%' }}
+                transition={{ delay: 1, duration: 0.8 }}
+                className="absolute -bottom-2 left-0 h-1 bg-primary/30"
+              />
+            </span>
           </motion.h1>
 
           {/* Subheadline */}
@@ -51,7 +85,7 @@ export function Hero() {
             className="mt-6 max-w-2xl text-lg sm:text-xl text-muted-foreground text-pretty"
           >
             The data-driven 12-week blueprint for high-performance professionals. 
-            Stop guessing, start building.
+            <span className="text-foreground"> Stop guessing, start building.</span>
           </motion.p>
 
           {/* Stats row */}
@@ -59,23 +93,30 @@ export function Hero() {
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.5, delay: 0.3 }}
-            className="mt-10 flex flex-wrap items-center justify-center gap-8 md:gap-12"
+            className="mt-10 flex flex-wrap items-center justify-center gap-8 md:gap-12 relative"
           >
-            <div className="text-center">
-              <div className="font-mono text-2xl sm:text-3xl font-bold text-foreground">500+</div>
-              <div className="text-sm text-muted-foreground">Transformations</div>
+            <TechnicalCallout 
+              label="Peak Efficiency" 
+              side="right" 
+              className="-right-40 top-0 hidden xl:flex" 
+              delay={0.8}
+            />
+            <div className="text-center group">
+              <div className="font-mono text-2xl sm:text-3xl font-bold text-foreground group-hover:text-primary transition-colors">500+</div>
+              <div className="text-xs uppercase tracking-widest text-muted-foreground">Transformations</div>
             </div>
             <div className="h-12 w-px bg-border hidden sm:block" />
-            <div className="text-center">
-              <div className="font-mono text-2xl sm:text-3xl font-bold text-foreground">12</div>
-              <div className="text-sm text-muted-foreground">Weeks to Results</div>
+            <div className="text-center group">
+              <div className="font-mono text-2xl sm:text-3xl font-bold text-foreground group-hover:text-primary transition-colors">12</div>
+              <div className="text-xs uppercase tracking-widest text-muted-foreground">Weeks Cycle</div>
             </div>
             <div className="h-12 w-px bg-border hidden sm:block" />
-            <div className="text-center">
-              <div className="font-mono text-2xl sm:text-3xl font-bold text-foreground">45min</div>
-              <div className="text-sm text-muted-foreground">Per Session</div>
+            <div className="text-center group">
+              <div className="font-mono text-2xl sm:text-3xl font-bold text-foreground group-hover:text-primary transition-colors">45min</div>
+              <div className="text-xs uppercase tracking-widest text-muted-foreground">Execution Time</div>
             </div>
           </motion.div>
+
 
           {/* CTA Button */}
           <motion.div

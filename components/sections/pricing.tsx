@@ -51,20 +51,38 @@ export function Pricing() {
             viewport={{ once: true }}
             transition={{ delay: index * 0.1 }}
             className={cn(
-              'relative rounded-2xl border p-6 lg:p-8',
+              'relative rounded-2xl border p-6 lg:p-8 transition-all duration-300 glass-panel rim-light',
               tier.featured 
-                ? 'border-primary bg-card shadow-lg shadow-primary/10 scale-105 lg:scale-110' 
-                : 'border-border bg-card/50'
+                ? 'border-primary shadow-lg shadow-primary/10 scale-105 lg:scale-110 z-10 bg-card' 
+                : 'border-border bg-card/40'
             )}
           >
+            {/* Featured Laser Scan */}
+            {tier.featured && (
+              <div className="absolute inset-0 overflow-hidden rounded-2xl pointer-events-none">
+                <motion.div 
+                  animate={{ 
+                    top: ['-10%', '110%'],
+                    opacity: [0, 1, 1, 0]
+                  }}
+                  transition={{ 
+                    duration: 3, 
+                    repeat: Infinity,
+                    ease: "linear"
+                  }}
+                  className="absolute left-0 right-0 h-px bg-primary/40 shadow-[0_0_15px_var(--primary)]"
+                />
+              </div>
+            )}
+
             {/* Badge */}
             {tier.badge && (
               <div className="absolute -top-3 left-1/2 -translate-x-1/2">
                 <span className={cn(
-                  'inline-block px-3 py-1 text-xs font-bold rounded-full',
+                  'inline-block px-3 py-1 text-[10px] font-bold rounded-full uppercase tracking-tighter',
                   tier.featured 
                     ? 'bg-primary text-primary-foreground' 
-                    : 'bg-secondary text-secondary-foreground'
+                    : 'bg-secondary text-secondary-foreground border border-border'
                 )}>
                   {tier.badge}
                 </span>
@@ -73,12 +91,12 @@ export function Pricing() {
 
             {/* Header */}
             <div className="text-center mb-6">
-              <h3 className="text-xl font-bold text-foreground mb-2">{tier.name}</h3>
+              <h3 className="text-xl font-bold text-foreground mb-2 uppercase tracking-tight">{tier.name}</h3>
               <div className="flex items-baseline justify-center gap-1">
                 <span className="text-4xl lg:text-5xl font-bold font-mono text-foreground">
                   ${tier.price}
                 </span>
-                <span className="text-muted-foreground text-sm">/one-time</span>
+                <span className="text-muted-foreground text-[10px] uppercase font-mono">/FIXED</span>
               </div>
             </div>
 
@@ -86,14 +104,17 @@ export function Pricing() {
             <ul className="space-y-3 mb-8">
               {tier.features.map((feature) => (
                 <li key={feature} className="flex items-start gap-3">
-                  <Check className={cn(
-                    'h-5 w-5 shrink-0 mt-0.5',
-                    tier.featured ? 'text-primary' : 'text-muted-foreground'
-                  )} />
+                  <div className="h-5 w-5 shrink-0 mt-0.5 flex items-center justify-center">
+                    <Check className={cn(
+                      'h-3.5 w-3.5',
+                      tier.featured ? 'text-primary' : 'text-muted-foreground/50'
+                    )} />
+                  </div>
                   <span className="text-sm text-muted-foreground">{feature}</span>
                 </li>
               ))}
             </ul>
+
 
             {/* CTA */}
             <CTAButton 

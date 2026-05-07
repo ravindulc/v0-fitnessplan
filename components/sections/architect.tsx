@@ -30,14 +30,21 @@ export function Architect() {
             <div className="absolute inset-0 rounded-2xl border-2 border-primary/30 translate-x-4 translate-y-4" />
             
             {/* Main image container */}
-            <div className="relative aspect-square rounded-2xl bg-secondary overflow-hidden border border-border">
+            <div className="relative aspect-square rounded-2xl bg-secondary overflow-hidden border border-border glass-panel rim-light">
               <Image
                 src="/images/jax-sterling.jpg"
                 alt="Jax Sterling - Fitness Coach"
                 fill
-                className="object-cover object-top"
+                className="object-cover object-top opacity-80"
                 priority
               />
+              
+              {/* Schematic Overlay */}
+              <svg className="absolute inset-0 w-full h-full pointer-events-none opacity-40">
+                <circle cx="50%" cy="30%" r="5" fill="var(--primary)" />
+                <line x1="50%" y1="30%" x2="70%" y2="20%" stroke="var(--primary)" strokeWidth="1" />
+                <text x="72%" y="19%" fill="var(--primary)" className="font-mono text-[8px]">BIO-ANALYSIS: OK</text>
+              </svg>
               
               {/* Overlay gradient */}
               <div className="absolute inset-0 bg-gradient-to-t from-background/80 via-transparent to-transparent" />
@@ -45,7 +52,7 @@ export function Architect() {
               {/* Name overlay */}
               <div className="absolute bottom-4 left-4 right-4">
                 <p className="text-lg font-semibold text-foreground">Jax Sterling</p>
-                <p className="text-sm text-muted-foreground">The Architect</p>
+                <p className="text-sm text-muted-foreground uppercase tracking-widest text-[10px]">The Architect</p>
               </div>
             </div>
 
@@ -55,7 +62,7 @@ export function Architect() {
               whileInView={{ opacity: 1, scale: 1 }}
               viewport={{ once: true }}
               transition={{ duration: 0.5, delay: 0.3 }}
-              className="absolute -bottom-6 -right-6 lg:right-auto lg:-left-6 bg-background border border-border rounded-xl p-4 shadow-lg"
+              className="absolute -bottom-6 -right-6 lg:right-auto lg:-left-6 bg-background/80 border border-border rounded-xl p-4 shadow-lg backdrop-blur-md rim-light"
             >
               <div className="flex items-center gap-3">
                 <div className="h-10 w-10 rounded-full bg-primary/20 flex items-center justify-center">
@@ -63,7 +70,7 @@ export function Architect() {
                 </div>
                 <div>
                   <div className="font-mono text-xl font-bold text-foreground">94%</div>
-                  <div className="text-xs text-muted-foreground">Client Success Rate</div>
+                  <div className="text-[10px] uppercase tracking-wider text-muted-foreground">System Success</div>
                 </div>
               </div>
             </motion.div>
@@ -77,37 +84,40 @@ export function Architect() {
           viewport={{ once: true }}
           transition={{ duration: 0.5 }}
         >
-          <span className="inline-block text-sm font-mono text-primary mb-4">
-            MEET THE ARCHITECT
-          </span>
+          <div className="flex items-center gap-2 mb-4">
+            <div className="h-px w-8 bg-primary" />
+            <span className="text-[10px] font-mono text-primary uppercase tracking-[0.2em]">
+              Origin: Structural Engineering
+            </span>
+          </div>
           
           <h2 className="text-3xl sm:text-4xl lg:text-5xl font-bold text-foreground mb-6 text-balance">
-            Engineering Excellence, Applied to Fitness
+            Precision Fitness, <span className="text-primary">Applied Logic.</span>
           </h2>
 
-          <div className="space-y-4 text-muted-foreground text-lg">
+          <div className="space-y-4 text-muted-foreground text-lg leading-relaxed">
             <p>
               Former structural engineer who discovered that the same principles governing 
-              load-bearing structures apply to building the human physique. After 15 years 
-              of refining the methodology, the results speak for themselves.
+              load-bearing structures apply to building the human physique.
             </p>
             <p>
-              My philosophy is simple: <span className="text-foreground font-medium">your body 
-              is a system, not a mystery</span>. Apply the right inputs, in the right sequence, 
-              and the outputs become predictable. No gimmicks. No guesswork. Just engineering.
+              My philosophy: <span className="text-foreground font-medium">your body 
+              is a system, not a mystery</span>. Apply the right inputs, and the outputs 
+              become predictable. No guesswork. Just engineering.
             </p>
           </div>
 
           {/* Stats */}
           <div className="mt-8 grid grid-cols-3 gap-4">
             {stats.map((stat) => (
-              <div key={stat.label} className="text-center p-4 rounded-lg bg-secondary/50 border border-border">
-                <stat.icon className="h-5 w-5 text-primary mx-auto mb-2" />
+              <div key={stat.label} className="text-center p-4 rounded-lg bg-secondary/30 border border-border/50 glass-panel hover:border-primary/50 transition-colors group">
+                <stat.icon className="h-4 w-4 text-primary mx-auto mb-2 opacity-50 group-hover:opacity-100 transition-opacity" />
                 <div className="font-mono text-xl font-bold text-foreground">{stat.value}</div>
-                <div className="text-xs text-muted-foreground">{stat.label}</div>
+                <div className="text-[9px] uppercase tracking-tighter text-muted-foreground">{stat.label}</div>
               </div>
             ))}
           </div>
+
 
           {/* CTA */}
           <div className="mt-10">
