@@ -1,5 +1,6 @@
 'use client'
 
+import Image from 'next/image'
 import { motion } from 'framer-motion'
 import { Award, Users, TrendingUp, ArrowRight } from 'lucide-react'
 import { SECTION_IDS } from '@/lib/constants'
@@ -30,18 +31,22 @@ export function Architect() {
             
             {/* Main image container */}
             <div className="relative aspect-square rounded-2xl bg-secondary overflow-hidden border border-border">
-              {/* Placeholder for image - will be replaced with actual photo */}
-              <div className="absolute inset-0 flex items-center justify-center">
-                <div className="text-center">
-                  <div className="w-32 h-32 mx-auto rounded-full bg-primary/20 flex items-center justify-center mb-4">
-                    <span className="font-mono text-5xl font-bold text-primary">J</span>
-                  </div>
-                  <p className="text-sm text-muted-foreground">Jax Sterling</p>
-                </div>
-              </div>
+              <Image
+                src="/images/jax-sterling.jpg"
+                alt="Jax Sterling - Fitness Coach"
+                fill
+                className="object-cover object-top"
+                priority
+              />
               
               {/* Overlay gradient */}
-              <div className="absolute inset-0 bg-gradient-to-t from-background/80 to-transparent" />
+              <div className="absolute inset-0 bg-gradient-to-t from-background/80 via-transparent to-transparent" />
+              
+              {/* Name overlay */}
+              <div className="absolute bottom-4 left-4 right-4">
+                <p className="text-lg font-semibold text-foreground">Jax Sterling</p>
+                <p className="text-sm text-muted-foreground">The Architect</p>
+              </div>
             </div>
 
             {/* Floating stats card */}
