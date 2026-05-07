@@ -85,7 +85,8 @@ export const TESTIMONIALS = [
     id: 1,
     name: 'Marcus Chen',
     role: 'Tech Executive',
-    image: '/testimonials/marcus.jpg',
+    beforeImage: '/testimonials/marcus-before.jpg',
+    afterImage: '/testimonials/marcus-after.jpg',
     metrics: {
       bodyFat: '-8.4%',
       strength: '+22%',
@@ -96,7 +97,8 @@ export const TESTIMONIALS = [
     id: 2,
     name: 'Sarah Mitchell',
     role: 'Investment Banker',
-    image: '/testimonials/sarah.jpg',
+    beforeImage: '/testimonials/sarah-before.jpg',
+    afterImage: '/testimonials/sarah-after.jpg',
     metrics: {
       bodyFat: '-12%',
       leanMass: '+8lbs',
@@ -107,7 +109,8 @@ export const TESTIMONIALS = [
     id: 3,
     name: 'David Park',
     role: 'Startup Founder',
-    image: '/testimonials/david.jpg',
+    beforeImage: '/testimonials/david-before.jpg',
+    afterImage: '/testimonials/david-after.jpg',
     metrics: {
       bodyFat: '-6%',
       energy: '+300%',
